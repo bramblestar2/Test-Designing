@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:Test_Designing"
              xmlns:settingsViewModel="clr-namespace:Test_Designing.MVVM.ViewModel.Settings"
              xmlns:settingsView="clr-namespace:Test_Designing.MVVM.View.Settings"
+             xmlns:projectViewModel="clr-namespace:Test_Designing.MVVM.ViewModel.ProjectViewer"
+             xmlns:projectView="clr-namespace:Test_Designing.MVVM.View.ProjectViewer"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
@@ -22,7 +24,14 @@
             <DataTemplate DataType="{x:Type settingsViewModel:InputViewModel}">
                 <settingsView:InputView/>
             </DataTemplate>
-            
+
+            <DataTemplate DataType="{x:Type projectViewModel:AudioViewModel}">
+                <projectView:AudioView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type projectViewModel:LaunchpadViewModel}">
+                <projectView:LaunchpadView/>
+            </DataTemplate>
+
         </ResourceDictionary>
         
     </Application.Resources>

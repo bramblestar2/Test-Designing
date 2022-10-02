@@ -4,20 +4,46 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Test_Designing.Windows"
+        xmlns:viewModel="clr-namespace:Test_Designing.MVVM.ViewModel.ProjectViewer"
         mc:Ignorable="d"
         Title="Project Viewer" Height="800" Width="1000"
         Background="Transparent"
         AllowsTransparency="True"
         WindowStyle="None"
         ResizeMode="NoResize">
+
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+
     <Grid>
         <Border Background="#FF2A2A2A"
-            CornerRadius="10">
+            CornerRadius="10" BorderBrush="#FF232323" BorderThickness="1">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="200"/>
+                    </Grid.RowDefinitions>
+                        
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="300"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{Binding LaunchpadVM}" Grid.Column="0"/>
+                    </Grid>
+
+                    <ContentControl Content="{Binding AudioVM}" Grid.Row="1"/>
+
+                </Grid>
 
                 <Rectangle Height="20"
                        Width="Auto"

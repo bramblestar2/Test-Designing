@@ -17,7 +17,7 @@
     </Window.DataContext>
     
     <Border Background="#FF2A2A2A"
-            CornerRadius="10">
+            CornerRadius="10" BorderBrush="#FF232323" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
@@ -75,7 +75,7 @@
                     Click="Close_Click"
                     FontSize="14"/>
 
-            <ContentControl Grid.Row="2" Content="{Binding ThemeVM}"/>
+            <ContentControl Grid.Row="2" Content="{Binding CurrentView}"/>
         </Grid>
     </Border>
 </Window>

@@ -36,8 +36,15 @@ namespace Test_Designing.MVVM.ViewModel.Settings
 
             CurrentView = ThemeVM;
 
-            ThemeViewCommand = new RelayCommand(o => { CurrentView = ThemeVM; });
-            InputViewCommand = new RelayCommand(o => { CurrentView = InputVM; });
+            ThemeViewCommand = new RelayCommand(o => 
+            { 
+                CurrentView = ThemeVM; 
+            });
+
+            InputViewCommand = new RelayCommand(o => 
+            { 
+                CurrentView = InputVM;
+            });
         }
     }
 }
