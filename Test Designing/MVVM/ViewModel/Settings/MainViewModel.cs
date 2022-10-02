@@ -10,8 +10,12 @@ namespace Test_Designing.MVVM.ViewModel.Settings
 {
     class MainViewModel : ObservableObject
     {
+
+
         public RelayCommand ThemeViewCommand { get; set; }
+        public RelayCommand InputViewCommand { get; set; }
         public ThemeViewModel ThemeVM { get; set; }
+        public InputViewModel InputVM { get; set; }
 
         private object _currentView;
 
@@ -28,9 +32,12 @@ namespace Test_Designing.MVVM.ViewModel.Settings
         public MainViewModel()
         {
             ThemeVM = new ThemeViewModel();
+            InputVM = new InputViewModel();
+
             CurrentView = ThemeVM;
 
             ThemeViewCommand = new RelayCommand(o => { CurrentView = ThemeVM; });
+            InputViewCommand = new RelayCommand(o => { CurrentView = InputVM; });
         }
     }
 }

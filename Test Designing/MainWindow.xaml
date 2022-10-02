@@ -87,7 +87,8 @@
 
             <ListView Grid.Row="1" Background="Transparent"
                       x:Name="ListView1" BorderThickness="0"
-                      MouseDoubleClick="ListBox_MouseDoubleClick">
+                      MouseDoubleClick="ListBox_MouseDoubleClick"
+                      Style="{StaticResource ListBoxTemplate}">
             </ListView>
 
         </Grid>

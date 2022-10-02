@@ -45,7 +45,8 @@ namespace Test_Designing
                 projects = File.ReadAllLines(System.AppDomain.CurrentDomain.BaseDirectory + "/ProjectInfos.txt");
             else
             {
-                MessageBox.Show("ProjectInfos.txt doesn't exist\nand poof, now it does, try again");
+                CustomMessageBox customMessageBox = new CustomMessageBox("ProjectInfos.txt doesn't exist\nand poof, now it does");
+
                 File.Create(System.AppDomain.CurrentDomain.BaseDirectory + "/ProjectInfos.txt").Close();
 
                 Get_Project_Info();
@@ -63,13 +64,15 @@ namespace Test_Designing
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Application.Current.Shutdown();
 
-            if (settings != null)
-                settings.Close();
-
-            if (projectViewer != null)
-                projectViewer.Close();
+            //this.Close();
+            //
+            //if (settings != null)
+            //    settings.Close();
+            //
+            //if (projectViewer != null)
+            //    projectViewer.Close();
         }
 
         private void Minimize_Click(object sender, RoutedEventArgs e)
@@ -197,7 +200,7 @@ namespace Test_Designing
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
             settings = new Settings();
-            settings.Show();
+            //settings.Show();
         }
     }
 }

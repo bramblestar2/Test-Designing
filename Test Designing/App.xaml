@@ -2,8 +2,6 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Test_Designing"
-             xmlns:settings="clr-namespace:Test_Designing.Windows"
-             xmlns:projectviewer="clr-namespace:Test_Designing.Windows"
              xmlns:settingsViewModel="clr-namespace:Test_Designing.MVVM.ViewModel.Settings"
              xmlns:settingsView="clr-namespace:Test_Designing.MVVM.View.Settings"
              StartupUri="MainWindow.xaml">
@@ -20,6 +18,9 @@
 
             <DataTemplate DataType="{x:Type settingsViewModel:ThemeViewModel}">
                 <settingsView:ThemeView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type settingsViewModel:InputViewModel}">
+                <settingsView:InputView/>
             </DataTemplate>
             
         </ResourceDictionary>

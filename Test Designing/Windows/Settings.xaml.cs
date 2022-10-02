@@ -24,6 +24,7 @@ namespace Test_Designing.Windows
             InitializeComponent();
             WindowTextBlock.Text = this.Title;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.Show();
         }
 
         private void Drag_Window(object sender, MouseButtonEventArgs e)
