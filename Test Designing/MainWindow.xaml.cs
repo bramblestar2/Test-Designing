@@ -6,6 +6,7 @@ using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,7 +27,7 @@ namespace Test_Designing
     public partial class MainWindow : Window
     {
         ProjectViewer projectViewer;
-        Settings settings = new Settings();
+        Settings settings;
         string[] projects;
 
         public MainWindow()
@@ -34,11 +35,21 @@ namespace Test_Designing
             InitializeComponent();
             WindowTextBlock.Text = this.Title;
             Get_Project_Info();
+
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
         private void Get_Project_Info()
         {
-            projects = File.ReadAllLines(System.AppDomain.CurrentDomain.BaseDirectory + "/ProjectInfos.txt");
+            if (File.Exists(System.AppDomain.CurrentDomain.BaseDirectory + "/ProjectInfos.txt"))
+                projects = File.ReadAllLines(System.AppDomain.CurrentDomain.BaseDirectory + "/ProjectInfos.txt");
+            else
+            {
+                MessageBox.Show("ProjectInfos.txt doesn't exist\nand poof, now it does, try again");
+                File.Create(System.AppDomain.CurrentDomain.BaseDirectory + "/ProjectInfos.txt").Close();
+
+                Get_Project_Info();
+            }
 
             for (int i = 0; i < projects.Length; i++)
                 Add_Project_Info(projects[i], projects[++i]);
@@ -54,7 +65,7 @@ namespace Test_Designing
         {
             this.Close();
 
-            if (projectViewer!= null)
+            if (settings != null)
                 settings.Close();
 
             if (projectViewer != null)
@@ -64,38 +75,6 @@ namespace Test_Designing
         private void Minimize_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
-        }
-
-        private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (ListView1.SelectedIndex != -1)
-            {
-                string projectName;
-                string projectPath;
-
-                if (ListView1.SelectedIndex % 2 == 0)
-                {
-                    projectName = projects[ListView1.SelectedIndex];
-                    projectPath = projects[ListView1.SelectedIndex + 1];
-                }
-                else
-                {
-                    projectName = projects[ListView1.SelectedIndex+1];
-                    projectPath = projects[ListView1.SelectedIndex];
-                }
-
-                projectViewer = new ProjectViewer(projectName, projectPath);
-
-                this.Close();
-
-                Nullable<bool> projectDialog = projectViewer.ShowDialog();
-
-                if (projectDialog == false)
-                {
-                    this.Close();
-                    settings.Close();
-                }
-            }
         }
 
         private void Add_Project_Info(string projectName, string path)
@@ -125,6 +104,43 @@ namespace Test_Designing
             ListView1.Items.Add(listView);
         }
 
+        private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (ListView1.SelectedIndex != -1)
+            {
+                string projectName;
+                string projectPath;
+
+                if (ListView1.SelectedIndex % 2 == 0)
+                {
+                    projectName = projects[ListView1.SelectedIndex];
+                    projectPath = projects[ListView1.SelectedIndex + 1];
+                }
+                else
+                {
+                    projectName = projects[ListView1.SelectedIndex + 1];
+                    projectPath = projects[ListView1.SelectedIndex];
+                }
+
+                projectViewer = new ProjectViewer(projectName, projectPath);
+
+
+                this.Hide();
+                if (settings != null)
+                    settings.Close();
+
+                Nullable<bool> projectDialog = projectViewer.ShowDialog();
+
+                if (projectDialog == false)
+                {
+                    this.Show();
+
+                    if (settings != null)
+                        settings.Close();
+                }
+            }
+        }
+
         private void New_Project_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog a = new SaveFileDialog();
@@ -135,15 +151,19 @@ namespace Test_Designing
 
             if (result == true)
             {
-                this.Close();
+                this.Hide();
+                if (settings != null)
+                    settings.Close();
 
                 projectViewer = new ProjectViewer();
                 Nullable<bool> projectDialog = projectViewer.ShowDialog();
 
                 if (projectDialog == false)
                 {
-                    this.Close();
-                    settings.Close();
+                    this.Show();
+
+                    if (settings != null)
+                        settings.Close();
                 }
             }
         }
@@ -157,28 +177,27 @@ namespace Test_Designing
 
             if (result == true)
             {
-                this.Close();
+                this.Hide();
+                if (settings != null)
+                    settings.Close();
 
                 projectViewer = new ProjectViewer();
                 Nullable<bool> projectDialog = projectViewer.ShowDialog();
 
                 if (projectDialog == false)
                 {
-                    this.Close();
-                    settings.Close();
+                    this.Show();
+
+                    if (settings != null)
+                        settings.Close();
                 }
             }
         }
 
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
-            Nullable<bool> result = settings.ShowDialog();
-
-            if (result == false)
-            {
-                settings.Close();
-                settings = new Settings();
-            }
+            settings = new Settings();
+            settings.Show();
         }
     }
 }

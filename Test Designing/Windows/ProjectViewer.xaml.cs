@@ -24,6 +24,7 @@ namespace Test_Designing.Windows
             InitializeComponent();
             this.Title = projectName;
             WindowTextBlock.Text = this.Title;
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
         public ProjectViewer()
