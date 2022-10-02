@@ -4,20 +4,39 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Test_Designing.Windows"
+        xmlns:viewModel="clr-namespace:Test_Designing.MVVM.ViewModel.Settings"
         mc:Ignorable="d"
         Title="Settings" Height="400" Width="300"
         Background="Transparent"
         AllowsTransparency="True"
         WindowStyle="None"
         ResizeMode="NoResize">
+
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+    
     <Border Background="#FF2A2A2A"
             CornerRadius="10">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
+            <StackPanel Grid.Row="1" Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <RadioButton Content="Theme" 
+                             Style="{StaticResource RadioButtonTheme}"
+                             Command="{Binding ThemeViewCommand}"
+                             IsChecked="True"/>
+                <RadioButton Content="Extra" 
+                             Style="{StaticResource RadioButtonTheme}"/>
+                <RadioButton Content="Extra" 
+                             Style="{StaticResource RadioButtonTheme}"/>
+            </StackPanel>
+            
             <Rectangle Height="20"
                        Width="Auto"
                        VerticalAlignment="Bottom"

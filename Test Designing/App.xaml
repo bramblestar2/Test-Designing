@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:Test_Designing"
              xmlns:settings="clr-namespace:Test_Designing.Windows"
              xmlns:projectviewer="clr-namespace:Test_Designing.Windows"
+             xmlns:settingsViewModel="clr-namespace:Test_Designing.MVVM.ViewModel.Settings"
+             xmlns:settingsView="clr-namespace:Test_Designing.MVVM.View.Settings"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
@@ -13,7 +15,13 @@
                 <ResourceDictionary Source="Theme/ButtonSelectTheme.xaml"/>
                 <ResourceDictionary Source="Theme/ListBoxTheme.xaml"/>
                 <ResourceDictionary Source="Theme/StylishScrollBar.xaml"/>
+                <ResourceDictionary Source="Theme/RadioButtonTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate DataType="{x:Type settingsViewModel:ThemeViewModel}">
+                <settingsView:ThemeView/>
+            </DataTemplate>
+            
         </ResourceDictionary>
         
     </Application.Resources>
