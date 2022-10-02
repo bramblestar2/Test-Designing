@@ -1,0 +1,58 @@
+﻿<Window x:Class="Test_Designing.Windows.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Test_Designing.Windows"
+        mc:Ignorable="d"
+        Title="Settings" Height="400" Width="300"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        ResizeMode="NoResize">
+    <Border Background="#FF2A2A2A"
+            CornerRadius="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Rectangle Height="20"
+                       Width="Auto"
+                       VerticalAlignment="Bottom"
+                       Fill="#FF1B1B1B"/>
+            <Rectangle Height="Auto"
+                       Width="Auto" Fill="#FF1B1B1B"
+                       RadiusX="10"
+                       RadiusY="10"
+                       MouseDown="Drag_Window"/>
+
+            <TextBlock Text="Window Name"
+                       Foreground="White"
+                       HorizontalAlignment="Left"
+                       Margin="10, 0"
+                       FontSize="20" Name="WindowTextBlock"
+                       IsHitTestVisible="False"/>
+
+
+            <Button x:Name="Minimize"
+                    ContentStringFormat="🗕"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Margin="0, 0, 35, 0"
+                    Style="{StaticResource ButtonTheme}"
+                    Click="Minimize_Click"
+                    FontSize="14"/>
+
+            <Button x:Name="Close"
+                    ContentStringFormat="╳"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Margin="10, 0"
+                    Style="{StaticResource ButtonTheme}"
+                    Click="Close_Click"
+                    FontSize="14"/>
+        </Grid>
+    </Border>
+</Window>
