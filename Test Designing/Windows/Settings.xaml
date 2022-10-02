@@ -26,13 +26,15 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal"
-                        HorizontalAlignment="Center">
-                <RadioButton Content="Theme" 
+                        HorizontalAlignment="Stretch"
+                        Background="#FF252525">
+                <RadioButton Content="Theme" Width="50" Foreground="White"
+                             Command="{Binding ThemeViewCommand}"
                              Style="{StaticResource RadioButtonTheme}"
                              IsChecked="True"/>
-                <RadioButton Content="Extra" 
+                <RadioButton Content="Extra" Width="50" Foreground="White"
                              Style="{StaticResource RadioButtonTheme}"/>
-                <RadioButton Content="Extra" 
+                <RadioButton Content="Extra" Width="50" Foreground="White"
                              Style="{StaticResource RadioButtonTheme}"/>
             </StackPanel>
             

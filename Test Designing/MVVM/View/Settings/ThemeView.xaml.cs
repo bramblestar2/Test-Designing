@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,12 @@ namespace Test_Designing.MVVM.View.Settings
         public ThemeView()
         {
             InitializeComponent();
+            Get_Settings();
+        }
+
+        private void Get_Settings()
+        {
+           
         }
     }
 }

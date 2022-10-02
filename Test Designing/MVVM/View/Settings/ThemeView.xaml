@@ -7,6 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="340" d:DesignWidth="300">
     <Grid>
-        <TextBlock Text="TEST" Foreground="White" FontSize="100"/>
+        <StackPanel>
+            <RadioButton Content="Dark Theme" FontSize="20" Name="DarkThemeButton"
+                         Foreground="White" Width="200"
+                         Style="{StaticResource RadioButtonTheme}"/>
+
+            <RadioButton Content="Flashbang Theme" FontSize="20" Name="FlashbangThemeButton"
+                         Foreground="White" Width="200"
+                         Style="{StaticResource RadioButtonTheme}"/>
+        </StackPanel>
     </Grid>
 </UserControl>
