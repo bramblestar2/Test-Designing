@@ -9,11 +9,11 @@
     <Grid>
         <StackPanel>
             <RadioButton Content="Dark Theme" FontSize="20" Name="DarkThemeButton"
-                         Foreground="White" Width="200"
+                         Foreground="White" Width="Auto"
                          Style="{StaticResource RadioButtonTheme}"/>
 
             <RadioButton Content="Flashbang Theme" FontSize="20" Name="FlashbangThemeButton"
-                         Foreground="White" Width="200"
+                         Foreground="White" Width="Auto"
                          Style="{StaticResource RadioButtonTheme}"/>
         </StackPanel>
     </Grid>

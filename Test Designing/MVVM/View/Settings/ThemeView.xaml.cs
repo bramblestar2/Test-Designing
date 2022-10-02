@@ -22,6 +22,7 @@ namespace Test_Designing.MVVM.View.Settings
     /// </summary>
     public partial class ThemeView : UserControl
     {
+        string dirLoc = System.AppDomain.CurrentDomain.BaseDirectory;
         public ThemeView()
         {
             InitializeComponent();
@@ -30,7 +31,13 @@ namespace Test_Designing.MVVM.View.Settings
 
         private void Get_Settings()
         {
-           
+           if (File.Exists(dirLoc + "/Settings.json"))
+           {
+                JObject json = JObject.Parse((File.ReadAllText(dirLoc + "/Settings.json")));
+                
+                DarkThemeButton.IsChecked = ((bool)json["Themes"]["Dark"]);
+                FlashbangThemeButton.IsChecked = ((bool)json["Themes"]["Flashbang"]);
+           }
         }
     }
 }
