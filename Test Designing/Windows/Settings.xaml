@@ -29,7 +29,6 @@
                         HorizontalAlignment="Center">
                 <RadioButton Content="Theme" 
                              Style="{StaticResource RadioButtonTheme}"
-                             Command="{Binding ThemeViewCommand}"
                              IsChecked="True"/>
                 <RadioButton Content="Extra" 
                              Style="{StaticResource RadioButtonTheme}"/>
@@ -72,6 +71,8 @@
                     Style="{StaticResource ButtonTheme}"
                     Click="Close_Click"
                     FontSize="14"/>
+
+            <ContentControl Grid.Row="2" Content="{Binding ThemeVM}"/>
         </Grid>
     </Border>
 </Window>
