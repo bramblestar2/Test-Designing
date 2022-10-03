@@ -71,5 +71,23 @@ namespace Test_Designing.MVVM.View.Settings
             public bool Dark { get; set; }
             public bool Flashbang { get; set; }
         }
+
+        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.GetType().IsVisible)
+            {
+                Root root = new Root()
+                {
+                    Themes = new Themes()
+                    {
+                        Dark = (bool)DarkThemeButton.IsChecked,
+                        Flashbang = (bool)FlashbangThemeButton.IsChecked,
+                    },
+                };
+
+                string json = JsonConvert.SerializeObject(root);
+                File.WriteAllText(dirLoc + "/Settings.json", json);
+            }
+        }
     }
 }

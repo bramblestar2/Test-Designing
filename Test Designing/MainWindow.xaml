@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Test_Designing"
-        mc:Ignorable="d"
+        mc:Ignorable="d" 
         Title="Main Window" Height="400" Width="600"
         Background="Transparent"
         AllowsTransparency="True"
@@ -44,7 +44,7 @@
                        Name="WindowTextBlock"/>
 
 
-                <Button x:Name="Minimize"
+            <Button x:Name="Minimize"
                     ContentStringFormat="🗕"
                     Grid.Column="1"
                     HorizontalAlignment="Right"
@@ -53,8 +53,8 @@
                     Style="{StaticResource ButtonTheme}"
                     Click="Minimize_Click"
                     FontSize="14"/>
-                
-                <Button x:Name="Close"
+
+            <Button x:Name="Close"
                     ContentStringFormat="╳"
                     Grid.Column="1"
                     HorizontalAlignment="Right"

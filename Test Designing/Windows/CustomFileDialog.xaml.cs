@@ -15,27 +15,23 @@ using System.Windows.Shapes;
 namespace Test_Designing.Windows
 {
     /// <summary>
-    /// Interaction logic for Settings.xaml
+    /// Interaction logic for CustomFileDialog.xaml
     /// </summary>
-    public partial class Settings : Window
+    public partial class CustomFileDialog : Window
     {
-        public Settings()
+        public CustomFileDialog()
         {
             InitializeComponent();
-            WindowTextBlock.Text = this.Title;
-            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            this.Hide();
         }
 
-        private void Drag_Window(object sender, MouseButtonEventArgs e)
+        private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
-                this.DragMove();
+            this.DragMove();
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            this.Hide();
+            this.Close();
         }
 
         private void Minimize_Click(object sender, RoutedEventArgs e)

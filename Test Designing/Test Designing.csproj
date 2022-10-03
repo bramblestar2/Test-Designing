@@ -100,6 +100,7 @@
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="MVVM\ViewModel\ProjectViewer\AudioViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\ProjectViewer\ClipViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ProjectViewer\LaunchpadViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ProjectViewer\MainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Settings\InputViewModel.cs" />
@@ -107,6 +108,9 @@
     <Compile Include="MVVM\ViewModel\Settings\ThemeViewModel.cs" />
     <Compile Include="MVVM\View\ProjectViewer\AudioView.xaml.cs">
       <DependentUpon>AudioView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\ProjectViewer\ClipView.xaml.cs">
+      <DependentUpon>ClipView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\ProjectViewer\LaunchpadView.xaml.cs">
       <DependentUpon>LaunchpadView.xaml</DependentUpon>
@@ -116,6 +120,9 @@
     </Compile>
     <Compile Include="MVVM\View\Settings\ThemeView.xaml.cs">
       <DependentUpon>ThemeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\CustomFileDialog.xaml.cs">
+      <DependentUpon>CustomFileDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\CustomMessageBox.xaml.cs">
       <DependentUpon>CustomMessageBox.xaml</DependentUpon>
@@ -139,6 +146,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MVVM\View\ProjectViewer\AudioView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\ProjectViewer\ClipView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -187,6 +198,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Theme\StylishScrollBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CustomFileDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

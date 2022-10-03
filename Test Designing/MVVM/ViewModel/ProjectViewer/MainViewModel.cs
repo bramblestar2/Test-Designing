@@ -12,8 +12,11 @@ namespace Test_Designing.MVVM.ViewModel.ProjectViewer
     {
         public RelayCommand LaunchpadViewCommand { get; set; }
         public RelayCommand AudioViewCommand { get; set; }
+        public RelayCommand ClipViewCommand { get; set; }
+
         public LaunchpadViewModel LaunchpadVM { get; set; }
         public AudioViewModel AudioVM { get; set; }
+        public ClipViewModel ClipVM { get; set; }
 
         private object _currentView;
 
@@ -31,6 +34,7 @@ namespace Test_Designing.MVVM.ViewModel.ProjectViewer
         {
             LaunchpadVM = new LaunchpadViewModel();
             AudioVM = new AudioViewModel();
+            ClipVM = new ClipViewModel();
 
             CurrentView = LaunchpadVM;
 
@@ -41,6 +45,10 @@ namespace Test_Designing.MVVM.ViewModel.ProjectViewer
             AudioViewCommand = new RelayCommand(o =>
             {
                 CurrentView = AudioVM;
+            });
+            ClipViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = ClipVM;
             });
         }
     }

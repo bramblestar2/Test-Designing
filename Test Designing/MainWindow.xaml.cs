@@ -27,7 +27,7 @@ namespace Test_Designing
     public partial class MainWindow : Window
     {
         ProjectViewer projectViewer;
-        Settings settings;
+        Settings settings = new Settings();
         string[] projects;
 
         public MainWindow()
@@ -130,7 +130,7 @@ namespace Test_Designing
 
                 this.Hide();
                 if (settings != null)
-                    settings.Close();
+                    settings.Hide();
 
                 Nullable<bool> projectDialog = projectViewer.ShowDialog();
 
@@ -139,7 +139,7 @@ namespace Test_Designing
                     this.Show();
 
                     if (settings != null)
-                        settings.Close();
+                        settings.Hide();
                 }
             }
         }
@@ -156,7 +156,7 @@ namespace Test_Designing
             {
                 this.Hide();
                 if (settings != null)
-                    settings.Close();
+                    settings.Hide();
 
                 projectViewer = new ProjectViewer();
                 Nullable<bool> projectDialog = projectViewer.ShowDialog();
@@ -166,7 +166,7 @@ namespace Test_Designing
                     this.Show();
 
                     if (settings != null)
-                        settings.Close();
+                        settings.Hide();
                 }
             }
         }
@@ -182,7 +182,7 @@ namespace Test_Designing
             {
                 this.Hide();
                 if (settings != null)
-                    settings.Close();
+                    settings.Hide();
 
                 projectViewer = new ProjectViewer();
                 Nullable<bool> projectDialog = projectViewer.ShowDialog();
@@ -192,15 +192,18 @@ namespace Test_Designing
                     this.Show();
 
                     if (settings != null)
-                        settings.Close();
+                        settings.Hide();
                 }
             }
         }
 
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
-            settings = new Settings();
-            //settings.Show();
+            if (settings.WindowState == WindowState.Minimized)
+                settings.WindowState = WindowState.Normal;
+            else if (!settings.IsActive)
+                settings.Show();
+            
         }
     }
 }
