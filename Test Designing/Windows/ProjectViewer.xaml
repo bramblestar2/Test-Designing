@@ -38,7 +38,14 @@
                             <ColumnDefinition Width="300"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{Binding LaunchpadVM}" Grid.Column="0"/>
+                        <Border BorderBrush="#FF1B1B1B" BorderThickness="1" 
+                                Grid.Column="1">
+                        </Border>
+
+                        <Border BorderBrush="#FF1B1B1B" BorderThickness="1" 
+                                Grid.Column="0">
+                            <ContentControl Content="{Binding LaunchpadVM}" />
+                        </Border>
                     </Grid>
 
                     <ContentControl Content="{Binding AudioVM}" Grid.Row="1"/>

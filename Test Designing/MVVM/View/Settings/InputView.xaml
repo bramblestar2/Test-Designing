@@ -9,6 +9,15 @@
     <Grid>
         <ListView Style="{StaticResource ListBoxTemplate}" Name="listView1">
             <TextBlock Text="Something" Foreground="White" FontSize="20"/>
+
+            <ComboBox Text="Pain" Width="100" Height="20" Style="{StaticResource ComboBoxTheme}">
+                <ComboBoxItem Content="Test"/>
+            </ComboBox>
+
+            
+
         </ListView>
+
+        
     </Grid>
 </UserControl>

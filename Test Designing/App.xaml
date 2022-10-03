@@ -16,6 +16,7 @@
                 <ResourceDictionary Source="Theme/ListBoxTheme.xaml"/>
                 <ResourceDictionary Source="Theme/StylishScrollBar.xaml"/>
                 <ResourceDictionary Source="Theme/RadioButtonTheme.xaml"/>
+                <ResourceDictionary Source="Theme/ComboBoxTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type settingsViewModel:ThemeViewModel}">
