@@ -100,6 +100,7 @@
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="MVVM\ViewModel\ProjectViewer\AudioViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\ProjectViewer\FilesViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ProjectViewer\ClipViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ProjectViewer\LaunchpadViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ProjectViewer\MainViewModel.cs" />
@@ -111,6 +112,9 @@
     </Compile>
     <Compile Include="MVVM\View\ProjectViewer\ClipView.xaml.cs">
       <DependentUpon>ClipView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\ProjectViewer\FilesView.xaml.cs">
+      <DependentUpon>FilesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\ProjectViewer\LaunchpadView.xaml.cs">
       <DependentUpon>LaunchpadView.xaml</DependentUpon>
@@ -153,6 +157,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MVVM\View\ProjectViewer\FilesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\ProjectViewer\LaunchpadView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -182,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Theme\ComboBoxTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme\ListViewTheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -245,7 +257,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>

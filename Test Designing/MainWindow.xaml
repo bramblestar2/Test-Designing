@@ -8,7 +8,7 @@
         Title="Main Window" Height="400" Width="600"
         Background="Transparent"
         AllowsTransparency="True"
-        WindowStyle="None"
+        WindowStyle="None" IsVisibleChanged="Window_IsVisibleChanged"
         ResizeMode="NoResize">
     <Border Background="#FF2A2A2A"
             CornerRadius="10" BorderBrush="#FF232323" BorderThickness="1">
@@ -87,6 +87,7 @@
 
             <ListView Grid.Row="1" Background="Transparent"
                       x:Name="ListView1" BorderThickness="0"
+                      SelectionChanged="ListView1_SelectionChanged"
                       MouseDoubleClick="ListBox_MouseDoubleClick"
                       Style="{StaticResource ListBoxTemplate}">
             </ListView>

@@ -35,6 +35,9 @@
             <DataTemplate DataType="{x:Type projectViewModel:ClipViewModel}">
                 <projectView:ClipView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type projectViewModel:FilesViewModel}">
+                <projectView:FilesView/>
+            </DataTemplate>
 
         </ResourceDictionary>
         

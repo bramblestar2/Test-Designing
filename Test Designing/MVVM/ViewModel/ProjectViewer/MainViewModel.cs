@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Test_Designing.Core;
-using Test_Designing.MVVM.ViewModel.Settings;
+﻿using Test_Designing.Core;
 
 namespace Test_Designing.MVVM.ViewModel.ProjectViewer
 {
@@ -13,10 +7,12 @@ namespace Test_Designing.MVVM.ViewModel.ProjectViewer
         public RelayCommand LaunchpadViewCommand { get; set; }
         public RelayCommand AudioViewCommand { get; set; }
         public RelayCommand ClipViewCommand { get; set; }
+        public RelayCommand FilesViewCommand { get; set; }
 
         public LaunchpadViewModel LaunchpadVM { get; set; }
         public AudioViewModel AudioVM { get; set; }
         public ClipViewModel ClipVM { get; set; }
+        public FilesViewModel FilesVM { get; set; }
 
         private object _currentView;
 
@@ -35,6 +31,7 @@ namespace Test_Designing.MVVM.ViewModel.ProjectViewer
             LaunchpadVM = new LaunchpadViewModel();
             AudioVM = new AudioViewModel();
             ClipVM = new ClipViewModel();
+            FilesVM = new FilesViewModel();
 
             CurrentView = LaunchpadVM;
 
@@ -49,6 +46,10 @@ namespace Test_Designing.MVVM.ViewModel.ProjectViewer
             ClipViewCommand = new RelayCommand(o =>
             {
                 CurrentView = ClipVM;
+            });
+            FilesViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = FilesVM;
             });
         }
     }

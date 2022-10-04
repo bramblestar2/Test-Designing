@@ -1,22 +1,12 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Test_Designing.Windows;
 
 namespace Test_Designing
@@ -29,25 +19,27 @@ namespace Test_Designing
         ProjectViewer projectViewer;
         Settings settings = new Settings();
         string[] projects;
+        string currentDir = System.AppDomain.CurrentDomain.BaseDirectory;
 
         public MainWindow()
         {
             InitializeComponent();
             WindowTextBlock.Text = this.Title;
-            Get_Project_Info();
+            //Get_Project_Info();
 
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
         private void Get_Project_Info()
         {
-            if (File.Exists(System.AppDomain.CurrentDomain.BaseDirectory + "/ProjectInfos.txt"))
-                projects = File.ReadAllLines(System.AppDomain.CurrentDomain.BaseDirectory + "/ProjectInfos.txt");
+            //var lines = new List<string>(File.ReadAllLines(currentDir + "/ProjectInfos.txt").Where(arg => !string.IsNullOrWhiteSpace(arg)));
+            if (File.Exists(currentDir + "/ProjectInfos.txt"))
+                projects = File.ReadAllLines(currentDir + "/ProjectInfos.txt").Where(arg => !string.IsNullOrWhiteSpace(arg)).ToArray();
             else
             {
                 CustomMessageBox customMessageBox = new CustomMessageBox("ProjectInfos.txt doesn't exist\nand poof, now it does");
 
-                File.Create(System.AppDomain.CurrentDomain.BaseDirectory + "/ProjectInfos.txt").Close();
+                File.Create(currentDir + "/ProjectInfos.txt").Close();
 
                 Get_Project_Info();
             }
@@ -65,14 +57,6 @@ namespace Test_Designing
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
-
-            //this.Close();
-            //
-            //if (settings != null)
-            //    settings.Close();
-            //
-            //if (projectViewer != null)
-            //    projectViewer.Close();
         }
 
         private void Minimize_Click(object sender, RoutedEventArgs e)
@@ -114,32 +98,26 @@ namespace Test_Designing
                 string projectName;
                 string projectPath;
 
-                if (ListView1.SelectedIndex % 2 == 0)
+                projectName = projects[ListView1.SelectedIndex * 2];
+                projectPath = projects[ListView1.SelectedIndex];
+
+                //if (File.Exists(projectPath))
                 {
-                    projectName = projects[ListView1.SelectedIndex];
-                    projectPath = projects[ListView1.SelectedIndex + 1];
-                }
-                else
-                {
-                    projectName = projects[ListView1.SelectedIndex + 1];
-                    projectPath = projects[ListView1.SelectedIndex];
-                }
+                    projectViewer = new ProjectViewer(projectName, projectPath);
 
-                projectViewer = new ProjectViewer(projectName, projectPath);
-
-
-                this.Hide();
-                if (settings != null)
-                    settings.Hide();
-
-                Nullable<bool> projectDialog = projectViewer.ShowDialog();
-
-                if (projectDialog == false)
-                {
-                    this.Show();
-
+                    this.Hide();
                     if (settings != null)
                         settings.Hide();
+
+                    Nullable<bool> projectDialog = projectViewer.ShowDialog();
+
+                    if (projectDialog == false)
+                    {
+                        this.Show();
+
+                        if (settings != null)
+                            settings.Hide();
+                    }
                 }
             }
         }
@@ -158,7 +136,20 @@ namespace Test_Designing
                 if (settings != null)
                     settings.Hide();
 
-                projectViewer = new ProjectViewer();
+                string fileName = System.IO.Path.GetFileNameWithoutExtension(a.FileName);
+                string fileFullName = System.IO.Path.GetFileName(a.FileName);
+                string filePath = a.FileName;
+                string fileDir = System.IO.Path.GetDirectoryName(filePath);
+                string newDir = fileDir + "/" + fileName + "/";
+
+                Directory.CreateDirectory(newDir);
+
+                File.Create(newDir + fileFullName).Close();
+
+                File.AppendAllText(currentDir + "/ProjectInfos.txt", "\n" + fileName);
+                File.AppendAllText(currentDir + "/ProjectInfos.txt", "\n" + newDir + fileFullName);
+
+                projectViewer = new ProjectViewer(fileName, filePath);
                 Nullable<bool> projectDialog = projectViewer.ShowDialog();
 
                 if (projectDialog == false)
@@ -184,7 +175,18 @@ namespace Test_Designing
                 if (settings != null)
                     settings.Hide();
 
-                projectViewer = new ProjectViewer();
+                string fileName = System.IO.Path.GetFileNameWithoutExtension(a.FileName);
+                string filePath = a.FileName;
+                string fileFullName = System.IO.Path.GetFileName(a.FileName);
+                string fileDir = System.IO.Path.GetDirectoryName(filePath);
+
+                if (!Check_Existing_Path(filePath))
+                {
+                    File.AppendAllText(currentDir + "/ProjectInfos.txt", "\n" + fileName);
+                    File.AppendAllText(currentDir + "/ProjectInfos.txt", "\n" + filePath);
+                }
+
+                projectViewer = new ProjectViewer(fileName, filePath);
                 Nullable<bool> projectDialog = projectViewer.ShowDialog();
 
                 if (projectDialog == false)
@@ -204,6 +206,45 @@ namespace Test_Designing
             else if (!settings.IsActive)
                 settings.Show();
             
+        }
+
+        private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue)
+            {
+                ListView1.Items.Clear();
+                Get_Project_Info();
+            }
+        }
+
+        private void ListView1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Mouse.RightButton == MouseButtonState.Pressed)
+            {
+                if (ListView1.SelectedIndex >= 0)
+                {
+                    //Delete lines for the selected project
+                    var lines = new List<string>(File.ReadAllLines(currentDir + "/ProjectInfos.txt").Where(arg => !string.IsNullOrWhiteSpace(arg)));
+                    lines.RemoveAt(ListView1.SelectedIndex);
+                    lines.RemoveAt(ListView1.SelectedIndex);
+
+                    File.WriteAllLines(currentDir + "/ProjectInfos.txt", lines.ToArray());
+
+                    ListView1.Items.Clear();
+                    Get_Project_Info();
+                }
+            }
+        }
+
+        private bool Check_Existing_Path(string path)
+        {
+            for (int i = 1; i < projects.Length; i+=2)
+            {
+                if (projects[i] == path)
+                    return true;
+            }
+
+            return false;
         }
     }
 }
