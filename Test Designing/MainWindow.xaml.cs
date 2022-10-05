@@ -26,20 +26,20 @@ namespace Test_Designing
             InitializeComponent();
             WindowTextBlock.Text = this.Title;
             //Get_Project_Info();
-
+            
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
         private void Get_Project_Info()
         {
             //var lines = new List<string>(File.ReadAllLines(currentDir + "/ProjectInfos.txt").Where(arg => !string.IsNullOrWhiteSpace(arg)));
-            if (File.Exists(currentDir + "/ProjectInfos.txt"))
-                projects = File.ReadAllLines(currentDir + "/ProjectInfos.txt").Where(arg => !string.IsNullOrWhiteSpace(arg)).ToArray();
+            if (File.Exists(currentDir + "\\ProjectInfos.txt"))
+                projects = File.ReadAllLines(currentDir + "\\ProjectInfos.txt").Where(arg => !string.IsNullOrWhiteSpace(arg)).ToArray();
             else
             {
                 CustomMessageBox customMessageBox = new CustomMessageBox("ProjectInfos.txt doesn't exist\nand poof, now it does");
 
-                File.Create(currentDir + "/ProjectInfos.txt").Close();
+                File.Create(currentDir + "\\ProjectInfos.txt").Close();
 
                 Get_Project_Info();
             }
@@ -66,29 +66,65 @@ namespace Test_Designing
 
         private void Add_Project_Info(string projectName, string path)
         {
-            ListView listView = new ListView();
-            Thickness a = new Thickness(0,0,0,0);
+            //for (int i = 0; i < 2; i++)
+            {
+                ListView listView = new ListView();
+                Thickness a = new Thickness(0, 0, 0, 0);
+                listView.MouseDoubleClick += ListView_MouseDoubleClick;
 
-            listView.BorderThickness = a;
-            listView.Background = Brushes.Transparent;
-            listView.IsHitTestVisible = false;
+                listView.BorderThickness = a;
+                listView.Background = Brushes.Transparent;
+                listView.IsHitTestVisible = false;
 
-            TextBlock textBlock = new TextBlock();
-            textBlock.Text = projectName;
-            textBlock.FontSize = 20;
-            textBlock.Foreground = Brushes.White;
-            textBlock.TextWrapping = TextWrapping.Wrap;
+                TextBlock textBlock = new TextBlock();
+                textBlock.Text = projectName;
+                textBlock.FontSize = 20;
+                textBlock.Foreground = Brushes.White;
+                textBlock.TextWrapping = TextWrapping.Wrap;
 
-            TextBlock textBlock1 = new TextBlock();
-            textBlock1.Text = path;
-            textBlock1.FontSize = 8;
-            textBlock1.Foreground = Brushes.Gray;
-            textBlock1.TextWrapping = TextWrapping.Wrap;
+                TextBlock textBlock1 = new TextBlock();
+                textBlock1.Text = path;
+                textBlock1.FontSize = 8;
+                textBlock1.Foreground = Brushes.Gray;
+                textBlock1.TextWrapping = TextWrapping.Wrap;
 
-            listView.Items.Add(textBlock);
-            listView.Items.Add(textBlock1);
+                listView.Items.Add(textBlock);
+                listView.Items.Add(textBlock1);
 
-            ListView1.Items.Add(listView);
+                
+                ListView1.Items.Add(listView);
+            }
+        }
+
+        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (ListView1.SelectedIndex != -1)
+            {
+                string projectName;
+                string projectPath;
+
+                projectName = projects[ListView1.SelectedIndex * 2];
+                projectPath = projects[ListView1.SelectedIndex * 2 + 1];
+
+                //if (File.Exists(projectPath))
+                {
+                    projectViewer = new ProjectViewer(projectName, projectPath);
+
+                    this.Hide();
+                    if (settings != null)
+                        settings.Hide();
+
+                    Nullable<bool> projectDialog = projectViewer.ShowDialog();
+
+                    if (projectDialog == false)
+                    {
+                        this.Show();
+
+                        if (settings != null)
+                            settings.Hide();
+                    }
+                }
+            }
         }
 
         private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -99,7 +135,7 @@ namespace Test_Designing
                 string projectPath;
 
                 projectName = projects[ListView1.SelectedIndex * 2];
-                projectPath = projects[ListView1.SelectedIndex];
+                projectPath = projects[ListView1.SelectedIndex * 2 + 1];
 
                 //if (File.Exists(projectPath))
                 {
@@ -140,14 +176,15 @@ namespace Test_Designing
                 string fileFullName = System.IO.Path.GetFileName(a.FileName);
                 string filePath = a.FileName;
                 string fileDir = System.IO.Path.GetDirectoryName(filePath);
-                string newDir = fileDir + "/" + fileName + "/";
+                string newDir = fileDir + "\\" + fileName + "\\";
 
                 Directory.CreateDirectory(newDir);
+                Directory.CreateDirectory(newDir + "\\Files\\");
 
                 File.Create(newDir + fileFullName).Close();
 
-                File.AppendAllText(currentDir + "/ProjectInfos.txt", "\n" + fileName);
-                File.AppendAllText(currentDir + "/ProjectInfos.txt", "\n" + newDir + fileFullName);
+                File.AppendAllText(currentDir + "\\ProjectInfos.txt", "\n" + fileName);
+                File.AppendAllText(currentDir + "\\ProjectInfos.txt", "\n" + newDir + fileFullName);
 
                 projectViewer = new ProjectViewer(fileName, filePath);
                 Nullable<bool> projectDialog = projectViewer.ShowDialog();
@@ -182,8 +219,8 @@ namespace Test_Designing
 
                 if (!Check_Existing_Path(filePath))
                 {
-                    File.AppendAllText(currentDir + "/ProjectInfos.txt", "\n" + fileName);
-                    File.AppendAllText(currentDir + "/ProjectInfos.txt", "\n" + filePath);
+                    File.AppendAllText(currentDir + "\\ProjectInfos.txt", "\n" + fileName);
+                    File.AppendAllText(currentDir + "\\ProjectInfos.txt", "\n" + filePath);
                 }
 
                 projectViewer = new ProjectViewer(fileName, filePath);
@@ -211,7 +248,7 @@ namespace Test_Designing
         private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue)
-            {
+            { 
                 ListView1.Items.Clear();
                 Get_Project_Info();
             }
@@ -224,11 +261,11 @@ namespace Test_Designing
                 if (ListView1.SelectedIndex >= 0)
                 {
                     //Delete lines for the selected project
-                    var lines = new List<string>(File.ReadAllLines(currentDir + "/ProjectInfos.txt").Where(arg => !string.IsNullOrWhiteSpace(arg)));
+                    var lines = new List<string>(File.ReadAllLines(currentDir + "\\ProjectInfos.txt").Where(arg => !string.IsNullOrWhiteSpace(arg)));
                     lines.RemoveAt(ListView1.SelectedIndex);
                     lines.RemoveAt(ListView1.SelectedIndex);
 
-                    File.WriteAllLines(currentDir + "/ProjectInfos.txt", lines.ToArray());
+                    File.WriteAllLines(currentDir + "\\ProjectInfos.txt", lines.ToArray());
 
                     ListView1.Items.Clear();
                     Get_Project_Info();
@@ -243,7 +280,6 @@ namespace Test_Designing
                 if (projects[i] == path)
                     return true;
             }
-
             return false;
         }
     }

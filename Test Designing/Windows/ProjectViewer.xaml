@@ -40,12 +40,12 @@
 
                         <Border BorderBrush="#FF1B1B1B" BorderThickness="1" 
                                 Grid.Column="1">
-                            <ContentControl Content="{Binding ClipVM}"/>
+                            <ContentControl Name="ClipVM_"/>
                         </Border>
 
                         <Border BorderBrush="#FF1B1B1B" BorderThickness="1" 
                                 Grid.Column="0">
-                            <ContentControl Content="{Binding LaunchpadVM}" />
+                            <ContentControl Name="LaunchpadVM_"/>
                         </Border>
                     </Grid>
 
@@ -55,11 +55,11 @@
                             <ColumnDefinition Width="300"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{Binding FilesVM}" Grid.Column="1"/>
+                        <ContentControl Name="FilesVM_" Grid.Column="1"/>
                         <Rectangle Fill="#FF1B1B1B" HorizontalAlignment="Left"
                                    Height="200" Width="2" Margin="-1,0,0,0" Grid.Column="1"/>
 
-                        <ContentControl Content="{Binding AudioVM}" Grid.Row="1" Grid.Column="0"/>
+                        <ContentControl Name="AudioVM_" Grid.Row="1" Grid.Column="0"/>
                     </Grid>
 
                 </Grid>

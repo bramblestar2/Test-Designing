@@ -4,23 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Test_Designing.MVVM.View.ProjectViewer"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" DragDrop.Drop="UserControl_Drop"
+             AllowDrop="True"
              d:DesignHeight="200" d:DesignWidth="300">
     <Grid>
-        <ScrollViewer>
-            <Grid>
-                <WrapPanel Orientation="Horizontal">
-                    <TextBlock Text="Test" FontSize="20" Foreground="White"/>
-                    <TextBlock Text="Test" FontSize="20" Foreground="White"/>
-                    <TextBlock Text="Test" FontSize="20" Foreground="White"/>
-                    <TextBlock Text="Test" FontSize="20" Foreground="White"/>
-                    <TextBlock Text="Test" FontSize="20" Foreground="White"/>
-                    <TextBlock Text="Test" FontSize="20" Foreground="White"/>
-                    <TextBlock Text="Test" FontSize="20" Foreground="White"/>
-                    <TextBlock Text="Test" FontSize="20" Foreground="White"/>
-                    <TextBlock Text="Test" FontSize="20" Foreground="White"/>
-                </WrapPanel>
-            </Grid>
-        </ScrollViewer>
+        <ItemsControl ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    Name="WrapPanel1" Background="Transparent" BorderThickness="0" IsTextSearchEnabled="True">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
     </Grid>
 </UserControl>

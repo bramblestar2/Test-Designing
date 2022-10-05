@@ -85,12 +85,11 @@
 
             </StackPanel>
 
-            <ListView Grid.Row="1" Background="Transparent"
-                      x:Name="ListView1" BorderThickness="0"
+            <ListBox Grid.Row="1" x:Name="ListView1" Opacity="1"
                       SelectionChanged="ListView1_SelectionChanged"
                       MouseDoubleClick="ListBox_MouseDoubleClick"
-                      Style="{StaticResource ListBoxTemplate}">
-            </ListView>
+                      Style="{StaticResource ListBoxTheme}" IsHitTestVisible="True">
+            </ListBox>
 
         </Grid>
     </Border>
