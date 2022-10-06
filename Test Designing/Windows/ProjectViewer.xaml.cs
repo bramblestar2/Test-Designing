@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 using Test_Designing.MVVM.View.ProjectViewer;
 
@@ -9,6 +10,11 @@ namespace Test_Designing.Windows
     /// </summary>
     public partial class ProjectViewer : Window
     {
+        ClipView clipView = new ClipView();
+        LaunchpadView launchpadView = new LaunchpadView();
+        FilesView filesView = new FilesView();
+        AudioView AudioView = new AudioView();
+
         public ProjectViewer(string projectName, string path)
         {
             InitializeComponent();
@@ -16,10 +22,12 @@ namespace Test_Designing.Windows
             WindowTextBlock.Text = this.Title;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            ClipVM_.Content = new ClipView();
-            LaunchpadVM_.Content = new LaunchpadView();
-            FilesVM_.Content = new FilesView(path);
-            AudioVM_.Content = new AudioView();
+            filesView = new FilesView(path);
+
+            ClipVM_.Content = clipView;
+            LaunchpadVM_.Content = launchpadView;
+            FilesVM_.Content = filesView;
+            AudioVM_.Content = AudioView;
         }
 
         public ProjectViewer()

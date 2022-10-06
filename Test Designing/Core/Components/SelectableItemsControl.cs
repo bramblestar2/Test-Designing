@@ -24,7 +24,14 @@ namespace Test_Designing.Core.Components
             var btn = (dynamic)sender;
             for (int i = 0; i < Items.Count; i++)
             {
-                
+                if (FindName(btn.Name))
+                {
+                    selected_index = FindName(btn.Name);
+                }
+                else if (sender is ItemsControl)
+                {
+                    
+                }
             }
         }
     }

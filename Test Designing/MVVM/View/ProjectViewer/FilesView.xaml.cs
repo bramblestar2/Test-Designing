@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Test_Designing.Windows;
+using DragEventArgs = System.Windows.DragEventArgs;
 
 namespace Test_Designing.MVVM.View.ProjectViewer
 {
@@ -25,6 +16,7 @@ namespace Test_Designing.MVVM.View.ProjectViewer
     {
         string[] files = null;
         string projectDir = null;
+        public string selectedFile { get; }
 
         public FilesView(string dir)
         {
@@ -57,8 +49,9 @@ namespace Test_Designing.MVVM.View.ProjectViewer
                     listView.BorderThickness = new Thickness(1, 1, 1, 1);
                     listView.IsHitTestVisible = true;
                     listView.ToolTip = tool;
-                    listView.MouseDown += MouseDown;
-                    
+                    listView.MouseDoubleClick += MouseDown;
+                    listView.MouseRightButtonDown += MouseDown;
+
                     TextBlock a = new TextBlock();
                     a.Text = System.IO.Path.GetFileName(files[i]);
                     a.TextWrapping = TextWrapping.Wrap;
@@ -84,17 +77,24 @@ namespace Test_Designing.MVVM.View.ProjectViewer
 
             for (int i = 0; i < fileLocations.Length; i++)
             {
-                File.Copy(fileLocations[i], projectDir + "/Files/" + System.IO.Path.GetFileName(fileLocations[i]));
+                if (!File.Exists(projectDir + "/Files/" + System.IO.Path.GetFileName(fileLocations[i])))
+                {
+                    File.Copy(fileLocations[i], projectDir + "/Files/" + System.IO.Path.GetFileName(fileLocations[i]));
 
-                WrapPanel1.Items.Clear();
-                Get_Files();
-                Add_Items();
+                    WrapPanel1.Items.Clear();
+                    Get_Files();
+                    Add_Items();
+                }
+                else
+                {
+                    CustomMessageBox customMessageBox = new CustomMessageBox("File already exists", "Error");
+                }
             }
         }
 
         private void MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (sender is ItemsControl)
+            if (sender is ItemsControl && e.LeftButton == MouseButtonState.Pressed)
             {
                 ItemsControl itemsControl1 = (ItemsControl)sender;
                 
@@ -108,16 +108,25 @@ namespace Test_Designing.MVVM.View.ProjectViewer
                 itemsControl.BorderThickness = new Thickness(1, 1, 1, 1);
                 itemsControl.IsHitTestVisible = true;
                 itemsControl.ToolTip = itemsControl1.ToolTip;
-                itemsControl.MouseDown += MouseDown;
+                itemsControl.MouseDoubleClick += MouseDown;
+                itemsControl.MouseRightButtonDown += MouseDown;
 
                 TextBlock a = new TextBlock();
                 a.Text = itemsControl2.Text;
                 a.TextWrapping = TextWrapping.Wrap;
                 a.Foreground = Brushes.White;
-                a.ToolTip = a.Text;
 
                 itemsControl.Items.Add(a);
                 WrapPanel1.Items.Add(itemsControl);
+                WrapPanel1.Items.Remove(itemsControl1);
+            }
+            else if (sender is ItemsControl && e.RightButton == MouseButtonState.Pressed)
+            {
+                ItemsControl a = (ItemsControl)sender;
+                TextBlock itemsControl2 = (TextBlock)a.Items.GetItemAt(0);
+
+                File.Delete(projectDir + "/Files/" + itemsControl2.Text);
+                WrapPanel1.Items.Remove(a);
             }
         }
     }

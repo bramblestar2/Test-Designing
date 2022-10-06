@@ -20,9 +20,19 @@ namespace Test_Designing.MVVM.View.ProjectViewer
     /// </summary>
     public partial class AudioView : UserControl
     {
+        private string activeFile;
+
         public AudioView()
         {
             InitializeComponent();
+            activeFile = null;
         }
+
+        public void updateActiveFile(string filePath)
+        {
+            activeFile = filePath;
+        }
+
+
     }
 }

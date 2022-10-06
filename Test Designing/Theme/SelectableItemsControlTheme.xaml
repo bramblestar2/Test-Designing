@@ -8,25 +8,24 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="ItemsControl">
                         <Grid>
-                            <Border Background="{TemplateBinding Background}" BorderThickness="0"
+                            <Border Name="bd"  Background="{TemplateBinding Background}" BorderThickness="0"
                                     Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
                                 <ScrollViewer x:Name="ScrollViewer1" 
                                     VerticalScrollBarVisibility="Auto" Padding="{TemplateBinding Padding}">
 
                                     <ItemsPresenter SnapsToDevicePixels="True" IsHitTestVisible="False"/>
-
                                 </ScrollViewer>
                             </Border>
                         </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Black"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style.Setters>
-
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="White"/>
-            </Trigger>
-        </Style.Triggers>
     </Style>
 </ResourceDictionary>
