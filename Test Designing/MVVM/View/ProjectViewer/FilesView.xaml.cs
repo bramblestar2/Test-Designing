@@ -1,10 +1,12 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
 using System.Windows.Input;
 using System.Windows.Media;
 using Test_Designing.Windows;
+using static System.Net.Mime.MediaTypeNames;
 using DragEventArgs = System.Windows.DragEventArgs;
 
 namespace Test_Designing.MVVM.View.ProjectViewer
@@ -49,8 +51,8 @@ namespace Test_Designing.MVVM.View.ProjectViewer
                     listView.BorderThickness = new Thickness(1, 1, 1, 1);
                     listView.IsHitTestVisible = true;
                     listView.ToolTip = tool;
-                    listView.MouseDoubleClick += MouseDown;
-                    listView.MouseRightButtonDown += MouseDown;
+                    listView.MouseDoubleClick += MouseDoubleClick;
+                    listView.MouseDown += MouseDown;
 
                     TextBlock a = new TextBlock();
                     a.Text = System.IO.Path.GetFileName(files[i]);
@@ -66,9 +68,26 @@ namespace Test_Designing.MVVM.View.ProjectViewer
 
         private void Get_Files()
         {
-
             if (Directory.Exists(projectDir + "/Files/"))
-                files = Directory.GetFiles(projectDir + "/Files/");
+            {
+                var temp = Directory.GetFiles(projectDir + "/Files/");
+
+                //Filter the files
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    string ext = Path.GetExtension(temp[i]);
+
+                    if ((ext == ".mp3" || ext == ".wav" || ext == ".ogg" || ext == ".aiff" || ext == ".flac"))
+                    {
+                        files = temp.Where(x =>
+                        Path.GetExtension(x) == ".mp3" ||
+                        Path.GetExtension(x) == ".wav" ||
+                        Path.GetExtension(x) == ".ogg" ||
+                        Path.GetExtension(x) == ".aiff" ||
+                        Path.GetExtension(x) == ".flac").ToArray();
+                    }
+                }
+            }
         }
 
         private void UserControl_Drop(object sender, DragEventArgs e)
@@ -79,11 +98,15 @@ namespace Test_Designing.MVVM.View.ProjectViewer
             {
                 if (!File.Exists(projectDir + "/Files/" + System.IO.Path.GetFileName(fileLocations[i])))
                 {
-                    File.Copy(fileLocations[i], projectDir + "/Files/" + System.IO.Path.GetFileName(fileLocations[i]));
+                    string ext = Path.GetExtension(fileLocations[i]);
+                    if ((ext == ".mp3" || ext == ".wav" || ext == ".ogg" || ext == ".aiff" || ext == ".flac"))
+                    {
+                        File.Copy(fileLocations[i], projectDir + "/Files/" + System.IO.Path.GetFileName(fileLocations[i]));
 
-                    WrapPanel1.Items.Clear();
-                    Get_Files();
-                    Add_Items();
+                        WrapPanel1.Items.Clear();
+                        Get_Files();
+                        Add_Items();
+                    }
                 }
                 else
                 {
@@ -94,10 +117,22 @@ namespace Test_Designing.MVVM.View.ProjectViewer
 
         private void MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (sender is ItemsControl && e.MiddleButton == MouseButtonState.Pressed)
+            {
+                ItemsControl a = (ItemsControl)sender;
+                TextBlock itemsControl2 = (TextBlock)a.Items.GetItemAt(0);
+
+                File.Delete(projectDir + "/Files/" + itemsControl2.Text);
+                WrapPanel1.Items.Remove(a);
+            }
+        }
+
+        private void MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
             if (sender is ItemsControl && e.LeftButton == MouseButtonState.Pressed)
             {
                 ItemsControl itemsControl1 = (ItemsControl)sender;
-                
+
                 TextBlock itemsControl2 = (TextBlock)itemsControl1.Items.GetItemAt(0);
 
                 ItemsControl itemsControl = new ItemsControl();
@@ -108,8 +143,8 @@ namespace Test_Designing.MVVM.View.ProjectViewer
                 itemsControl.BorderThickness = new Thickness(1, 1, 1, 1);
                 itemsControl.IsHitTestVisible = true;
                 itemsControl.ToolTip = itemsControl1.ToolTip;
-                itemsControl.MouseDoubleClick += MouseDown;
-                itemsControl.MouseRightButtonDown += MouseDown;
+                itemsControl.MouseDoubleClick += MouseDoubleClick; ;
+                itemsControl.MouseDown += MouseDown;
 
                 TextBlock a = new TextBlock();
                 a.Text = itemsControl2.Text;
@@ -119,14 +154,6 @@ namespace Test_Designing.MVVM.View.ProjectViewer
                 itemsControl.Items.Add(a);
                 WrapPanel1.Items.Add(itemsControl);
                 WrapPanel1.Items.Remove(itemsControl1);
-            }
-            else if (sender is ItemsControl && e.RightButton == MouseButtonState.Pressed)
-            {
-                ItemsControl a = (ItemsControl)sender;
-                TextBlock itemsControl2 = (TextBlock)a.Items.GetItemAt(0);
-
-                File.Delete(projectDir + "/Files/" + itemsControl2.Text);
-                WrapPanel1.Items.Remove(a);
             }
         }
     }
